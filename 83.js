@@ -9,7 +9,7 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var deleteDuplicates = function(head, node, indexNext) {
+var deleteDuplicates = function(head, next) {
   var isPass = false;
   if(!head) return head;
   
