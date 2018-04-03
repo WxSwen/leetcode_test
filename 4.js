@@ -15,6 +15,9 @@ var findMedianSortedArrays = function(nums1, nums2) {
     // }
     // return (sumArray[len / 2] + sumArray[len / 2 - 1]) / 2
 
+
+    // 上一个做法大致是重新sort一遍，时间复杂度O(n);
+    // 下面的做法是一个一个push，遇到中间的时候直接break；时间复杂度为一半
     var i = 0, j = 0;
     
     var len = nums1.length + nums2.length;

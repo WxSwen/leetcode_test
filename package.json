@@ -1,0 +1,30 @@
+{
+  "name": "leetcode",
+  "version": "1.0.0",
+  "description": "leetcode",
+  "main": "1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WxSwen/leetcode_test.git"
+  },
+  "keywords": [
+    "leetcode"
+  ],
+  "author": "swen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WxSwen/leetcode_test/issues"
+  },
+  "homepage": "https://github.com/WxSwen/leetcode_test#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
