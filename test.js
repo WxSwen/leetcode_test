@@ -1,25 +1,35 @@
-function list(){
-  let Node = function(element){
-    this.element = element;
-    this.next = null;
-  };
+// let onWatch = (obj, setBind, getLogger) => {
+//   let handler = {
+//     get(target, property, receiver) {
+//       getLogger(target, property);
+//       return Reflect.get(target, property, receiver);
+//     },
+//     set(target, property, value, receiver) {
+//       setBind(value);
+//       return Reflect.set(target, property, value);
+//     }
+//   }
+//   return new Proxy(obj, handler);
+// };
 
-  let length = 0;
-  let head = null;
+// let obj = { a: 1 }
+// let value;
+// let p = onWatch(obj, (v) => {
+//   value = v;
+// }, (target, property) => {
+//   console.log(`Get '${property}' = ${target[property]}`);
+// });
+// p.a = 2;
+// p.a
 
-  this.append = function(element){
-    let node = new Node(element);
-    let current;
 
-    if(head === null){
-      head = node;
-    } else {
-      current = head;
-      while (current.next) {
-        current = current.next;
-      }
-      current.next = node;
-    }
-    length++;
-  }
+function MyData() {
 }
+let d = new Date()
+Object.setPrototypeOf(d, MyData.prototype)
+Object.setPrototypeOf(MyData.prototype, Date.prototype)
+MyData.prototype.test = function () {
+  return this.getTime()
+}
+
+console.log(d.test());
