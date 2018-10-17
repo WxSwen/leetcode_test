@@ -29,7 +29,7 @@ var fourSum = function(nums, target) {
             continue;
           }
         for(k = j + 1, l = n - 1; k < l;) {
-          console.log(i, j, k, l);
+          // console.log(i, j, k, l);
           if(nums[i] + nums[j] + nums[k] + nums[l] === target) {
             result.push([nums[i], nums[j], nums[k], nums[l]]);
             k++;
