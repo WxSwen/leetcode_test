@@ -3,7 +3,8 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    if(s.length <= 1) return false;
+  if(s.length === 0) return true;
+  if(s.length === 1) return false;
     
     var o = Object.create(null);
     var obj = Object.assign(o, {
