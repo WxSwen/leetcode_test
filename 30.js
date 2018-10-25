@@ -9,6 +9,7 @@
     
 // };
 
+// 暂时保存全排列
 function permutate(str) {
     var result = [];
  
