@@ -44,7 +44,7 @@
 //   return ret;
 // };
 
-
+// 回文只有偶数和奇数两种
 var longestPalindrome = function(s) {
   if (s == null) {
     return null;
