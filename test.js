@@ -1,135 +1,322 @@
-// if(!Function.prototype.bind) {
-//   Function.prototype.bind = function(oThis) {
-//     if(typeof this !== 'function') {
-//       throw new TypeError('error');
+// function quicksort(arr, left, right) {
+//   let i = left;
+//   let j = right;
+//   let temp = arr[left];
+//   if(left > right) {
+//     return arr;
+//   }
+//   while(i !== j) {
+//     while( j > i && arr[j] >= temp) {
+//       j--;
 //     }
-//     var fToBind = this,
-//       fNOP    = function() {},
-//       fBound  = function() {
-//         return fToBind.apply(this instanceof fBound
-//                ? this
-//                : oThis,
-//                ...[...arguments].slice(1)       
-//           )
+//     while( j > i && arr[i] <= temp) {
+//       i++;
+//     }
+//     [arr[i], arr[j]] = [arr[j], arr[i]];
+//   }
+//   [arr[left], arr[i]] = [arr[i], arr[left]];
+
+//   quicksort(arr, left, i - 1);
+//   quicksort(arr, i + 1, right);
+// }
+
+// var arr = [2,3,4,1,5,6]
+// quicksort(arr, 0, 5);
+// console.log(arr)
+
+
+// 1. 输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+// function getCount(num) {
+//   let count = 0;
+
+//   while(num !== 0) {
+//     num = num & (num - 1);
+//     count++;
+//   }
+//   return count;
+// }
+// console.log(getCount(2));
+
+// 2、判断二进制中0的个数
+// 按位与对比最后一位，右移
+// function getCount(n) { 
+//   let count = 0;
+//   while(n !== 0) {
+//     if((n & 1) !== 1) {
+//       count++;
+//     }
+//     n = n >> 1;
+//   }
+//   return count;
+// }
+
+// console.log(getCount(2));
+
+
+// 二、二叉树
+// 1、二叉搜索树第k个结点
+// 给定一颗二叉搜索树，请找出其中的第k小的结点
+// var a = {
+//   val: 8,
+//   left: {
+//     val: 3,
+//     left: {
+//       val: 1,
+//       left: null,
+//       right: null
+//     },
+//     right: {
+//       val: 6,
+//       left: {
+//         val: 4,
+//         left: null,
+//         right: null
+//       },
+//       right: {
+//         val: 7,
+//         left: null,
+//         right: null
 //       }
-    
-//     if(this.prototype) {
-//       fNOP.prototype = this.prototype;
 //     }
-
-//     fBound.prototype = new fNOP();
-
-//     return fBound;
+//   },
+//   right: {
+//     val: 10,
+//     left: null,
+//     right: {
+//       val: 14,
+//       left: {
+//         val: 13,
+//         left: null,
+//         right: null
+//       },
+//       right: null
+//     }
 //   }
 // }
 
-// function instance_of(L, R) {//L 表示左表达式，R 表示右表达式
-//   var O = R.prototype;// 取 R 的显示原型
-//   L = L.__proto__;// 取 L 的隐式原型
-//   while (true) { 
-//     if (L === null) 
-//       return false; 
-//     if (O === L)// 这里重点：当 O 严格等于 L 时，返回 true 
-//       return true; 
-//     L = L.__proto__; 
-//   } 
-// }
-// https://www.ibm.com/developerworks/cn/web/1306_jiangjj_jsinstanceof/index.html
 
-
-Function.prototype.bind3 = function(oThis, ...args) {
-  let fToBind = this;
-  let fNOP = function() {};
-  // let fBound  = function() {
-  //       return fToBind.apply(this instanceof fBound
-  //              ? this
-  //              : oThis,
-  //              ...[...arguments].slice(1)       
-  //         )
-  //     }
-  let fBound = function(...innerArgs) {
-    return fToBind.call( new.target 
-            ? this 
-            : oThis,
-            ...args, ...innerArgs
-        );
-  }
-  if(this.prototype) {
-    fNOP.prototype = this.prototype;
-  }
-
-  fBound.prototype = new fNOP();
-
-  return fBound;
-};
-
-// Function.prototype.bind2 = function (context) {
-
-//   var self = this;
-//   // 获取bind2函数从第二个参数到最后一个参数
-//   var args = Array.prototype.slice.call(arguments, 1);
-
-//   return function () {
-//       // 这个时候的arguments是指bind返回的函数传入的参数
-//       var bindArgs = Array.prototype.slice.call(arguments);
-//       self.apply(context, args.concat(bindArgs));
+// function getKNodeBTree(root, k) {
+//   let s = [];
+//   let p = root;
+//   while(s.length > 0 || p != null) {
+//     if(p !== null) {
+//       s.push(p);
+//       p = p.left;
+//     } else {
+//       p = s.pop();
+//       k--;
+//       if( k === 0) {
+//         return p.val;
+//       }
+//       p = p.right;
+//     }
 //   }
-
+//   return null;
 // }
 
-// var value = 2;
+// console.log(getKNodeBTree(a, 5));
 
-// var foo = {
-//     value: 1
-// };
+// 2.0 从上往下打印二叉树
 
-// function bar(name, age) {
-//     this.habit = 'shopping';
-//     console.log(this.value);
-//     console.log(name);
-//     console.log(age);
+// function printTree(root) {
+//   if(!root) return null;
+//   let s = [root];
+//   let cur = null;
+//   let f = [];
+//   while(s.length) {
+//     cur = s.shift();
+//     f.push(cur.val);
+//     cur.left && s.push(cur.left);
+//     cur.right && s.push(cur.right);
+//     console.log(s.length);
+//   }
+//   return f;
 // }
 
-// bar.prototype.friend = 'kevin';
+// console.log(printTree(a));
 
-// var bindFoo = bar.bind(foo, 'daisy');
+// 2.1二叉树打印成多行
 
-// var obj = new bindFoo('18');
-
-// console.log(obj.habit);
-// console.log(obj.friend);
-
-let foo = {
-  name: 'bind'
-};
-function callSth(age, sex) {
-  console.log(this.name);
-  console.log(age);
-  console.log(sex);
-  console.log(this.grade);
-}
-callSth.prototype.grade = 11;
-
-let bindsFun = callSth.bind3(foo);
-
-let callFun = new bindsFun(1, 'male');
-
-
-// const add = x => x + 1;
-// const multiply = (x, y) => x * y;
-// const multiplyAdd = compose(multiply, add);
-// console.log(multiplyAdd(3, 4))  // 返回 13
-
-// function compose(...funcs) {
-//   if (funcs.length === 0) {
-//     return arg => arg
+// function printTree(root) {
+//   if(!root) return null;
+//   let s = [{ node: root, l: 0 }];
+//   let cur = null;
+//   let f = [];
+//   while(s.length) {
+//     cur = s.shift();
+    
+//     f[cur.l] = f[cur.l] || [];
+//     f[cur.l].push(cur.node.val);
+//     cur.node.left && s.push({ node: cur.node.left, l: cur.l + 1 });
+//     cur.node.right && s.push({ node: cur.node.right, l: cur.l + 1 });
 //   }
+//   return f;
+// }
 
-//   if (funcs.length === 1) {
-//     return funcs[0]
+// console.log(printTree(a));
+
+// function verifyBTree(array, start, end) {
+//   if(start >= end) return true;
+//   let root = array[end];
+//   let i = start;
+//   while(array[i] < root) {
+//     i++;
 //   }
+//   let j = i;
+//   while(j < end) {
+//     if(array[j] < root) return false;
+//     j++;
+//   }
+//   let left = verifyBTree(array, start, i - 1);
+//   let right = verifyBTree(array, i, end - 1);
+//   return left && right;
+// }
 
-//   return funcs.reduceRight((a, b) => (...args) => a(b(...args)))
+// console.log(verifyBTree([4,8,6,12,16,14,10], 0, 6));
+
+// 10、二叉树的深度
+// function treeDepth (root) {
+//   if(!root) return 0;
+//   let left = treeDepth(root.left);
+//   let right = treeDepth(root.right);
+
+//   return left > right ? left + 1 : right + 1;
+// }
+// console.log(treeDepth(a));
+
+// 11、平衡二叉树
+// function IsBalance(root) {
+//   return reverse(root);
+// }
+
+// function reverse(root) {
+//   if(!root) return 0;
+
+//   let left  = reverse(root.left);
+//   let right = reverse(root.right);
+
+//   if(Math.abs(left - right) > 1) {
+//     return false;
+//   }
+//   return Math.max(left, right) + 1;
+// }
+
+// console.log(IsBalance(a));
+
+// function Find(target, array) {
+//     // write code here
+//     let len = array[0].length;
+//     let column = 0;
+//     let row = len - 1;
+
+//     if(array.length > 0) {
+//       while(row >= 0 && column < array.length) {
+//         if(target === array[column][row]) {
+//           return true;
+//         } else if(target > array[column][row]) {
+//           column++;
+//         } else {
+//           row--;
+//         }
+//       }
+//     }
+//     return false;
+// }
+
+
+
+// function Find(target, array) {
+//   // write code here
+//   lenX = array.length;
+//   lenY = array[0].length;
+//   for (var i = lenX - 1, j = 0; i >= 0 && j < lenY;) {
+//       if (target > array[i][j]) {
+//           j++;
+//       }
+//       else if (target < array[i][j]) {
+//           i--;
+//       }
+//       else {
+//           return true;
+//       }
+//   }
+//   return false
+// }
+
+// function Find(target, array) {
+//   let reg = new RegExp(`(^|,)${target}($|,)`);
+//   return reg.test(array.toString())
+// }
+
+// console.log(Find(7,[[1,2,8,9],[4,7,10,13]]));
+
+// function balanceTree(root) {
+//   if(!root) return 0;
+
+//   let left = balanceTree(root.left);
+//   let right = balanceTree(root.right);
+//   if(Math.abs(left - right) > 1) {
+//     return false;
+//   } else {
+//     return Math.max(left, right) + 1;
+//   }
+// }
+
+// var a = {
+//   val: 8,
+//   left: {
+//     val: 3,
+//     left: {
+//       val: 1,
+//       left: null,
+//       right: null
+//     },
+//     right: {
+//       val: 6,
+//       left: {
+//         val: 4,
+//         left: null,
+//         right: null
+//       },
+//       right: {
+//         val: 7,
+//         left: null,
+//         right: null
+//       }
+//     }
+//   },
+//   right: {
+//     val: 10,
+//     left: null,
+//     right: {
+//       val: 14,
+//       left: {
+//         val: 13,
+//         left: null,
+//         right: null
+//       },
+//       right: null
+//     }
+//   }
+// }
+
+// // 中序
+// function ldr(root) {
+//   let arr = [];
+//   let rootArr = [];
+//   rootArr.push(root);
+//   while(rootArr.length) {
+//     let p = rootArr[0];
+//     if(p.left) {
+//       rootArr.unshift(p.left);
+//     }
+//     p = rootArr.shift();
+//     if(p.right) {
+//       rootArr.push(p.right);
+//     }
+//     arr.push(p.val);
+//   }
+//   return arr;
 // }
 
 
@@ -160,285 +347,93 @@ let callFun = new bindsFun(1, 'male');
 // quicksort(arr, 0, 5);
 // console.log(arr)
 
+// function quicksort(arr, left, right) {
+//   let i = left;
+//   let j = right;
+//   let temp = arr[left];
 
-// 1. function transformToNumber(str) {
-//   let total = 0;
-//   str.match(/[A-Z]/g).forEach(el => total += el.charCodeAt() - 64 );
-//   return total;
-// }
-// function transformToNumber(str) {
-//   if(!str.length) return 0;
-//   return str.match(/[A-Z]/g).reduce((total, next) => { return total + (next.charCodeAt() - 64) }, 0);
-// }
-// console.log(transformToNumber('ABCDE'));
+//   if(left > right) return arr;
 
-// 3.
-// function findTheMostLongArray(arr) {
-//   let max = [];
-//   let temp = [];
-//   let last = 0;
-//   arr.reduce((left, right, index) => {
-//     if(left >= right) {
-//       temp = arr.slice(last, index);
-//       last = index;
-//       max = max.length > temp.length ? max : temp;
+//   while(i !== j) {
+//     while(i < j && arr[j] >= temp) {
+//       j--;
 //     }
-//     return left = right;
-//   });
-//   return max;
-// }
-
-// console.log(findTheMostLongArray([1,9,2,5,7,3,4,6,8,0, -1]));
-
-// 4.
-function getMidNodeLink(node) {
-  let fast = node.next;
-  let slow = node;
-  if(!slow || !fast) {
-    return node;
-  }
-
-  while(fast && fast.next) {
-    fast = fast.next.next;
-    slow = slow.next;
-  }
-  return slow;
-}
-
-// var b = {
-//   val: 1,
-//   next: {
-//     val: 2,
-//     next: {
-//       val: 3,
-//       next: {
-//         val: 4,
-//         next: {
-//           val: 5,
-//           next: {
-//             val: 6,
-//             next: {
-//               val: 7,
-//               next: {
-//                 val: 8,
-//                 next: null
-//               }
-//             }
-//           }
-//         }
-//       }
+//     while(i < j && arr[i] <= temp) {
+//       i++;
 //     }
+//     [arr[i], arr[j]] = [arr[j], arr[i]];
+//   }
+//   [arr[left], arr[i]] = [arr[i], arr[left]];
+
+//   console.log(i);
+//   quicksort(arr, left, i - 1);
+//   quicksort(arr, i + 1, right);
+// }
+
+// quicksort(arr, 0, 6);
+// console.log(arr)
+
+
+// function binarySearch(arr, num, left, right) {
+//   let mid = (left + right) >> 1;
+//   if(left > right) return -1;
+//   if(arr[mid] === num) {
+//     return mid;
+//   } else if(arr[mid] > num) {
+//     return binarySearch(arr, num, left, mid - 1);
+//   } else {
+//     return binarySearch(arr, num, mid + 1, right);
 //   }
 // }
 
-// console.log(getMidNodeLink(b));
-
-// 6.
-// function reverseArray(arr) {
-//   let len = arr.length;
-//   for(let i = 0; i < len >> 1; i++) {
-//     [arr[i], arr[len - i - 1]] = [arr[len - i - 1], arr[i]]
-//   }
-//   return arr;
-// }
-// console.log(reverseArray([1,2,3,4,5,6,7]));
-
-// 5.
-// function findChildLink(l1, l2) {
-//   let child = [];
-//   while(l1 && l2) {
-//     if(l1.val === l2.val) {
-//       child.push(l1.val);
-//       l1 = l1.next;
-//       l2 = l2.next;
-//     } else if(l1.val > l2.val) {
-//       l2 = l2.next;
-//     } else {
-//       l1 = l1.next;
-//     }
-//   }
-//   return child;
-// }
-
-// var l1 = {
-//   val: '1',
-//   next: {
-//     val: '2',
-//     next: {
-//       val: '3',
-//       next: null
-//     }
-//   }
-// };
-// var l2 = {
-//   val: '1',
-//   next: {
-//     val: '3',
-//     next: {
-//       val: '4',
-//       next: null
-//     }
-//   }
-// }
-
-// console.log(findChildLink(l1, l2));
+// var arr = [2, 3, 8, 9, 10, 11, 25, 87];
+// console.log(binarySearch(arr, 7, 0, arr.length - 1));
 
 
-// 2. dfs
+// console.log('start');
+
+// setTimeout(() => {          // callback1
+//   console.log(111);
+//   setTimeout(() => {        // callback2
+//     console.log(222);
+//   }, 0);
+//   setImmediate(() => {      // callback3
+//     console.log(333);
+//   })
+//   process.nextTick(() => {  // callback4
+//     console.log(444);  
+//   })
+// }, 0);
+
+// setImmediate(() => {        // callback5
+//   console.log(555);
+//   process.nextTick(() => {  // callback6
+//     console.log(666);  
+//   })
+// })
+
+// setTimeout(() => {          // callback7              
+//   console.log(777);
+//   process.nextTick(() => {  // callback8
+//     console.log(888);   
+//   })
+// }, 0);
+
+// process.nextTick(() => {    // callback9
+//   console.log(999);  
+// })
+
+// console.log('end');
+
+// start end 999 111 444 777 888 555 666 333 222
 
 
-// public static int KthSmallest(TreeNode root, int k)
-//   {
-//       Stack<TreeNode> s = new Stack<TreeNode>();
-//       TreeNode p = root;
-//       while (s.Count > 0 || p != null)
-//       {
-//           if (p != null)
-//           {
-//               s.Push(p);
-//               p = p.Left;
-//           }
-//           else
-//           {
-//               p = s.Pop();
-//               --k;
-//               if (k == 0)
-//               {
-//                   return p.value;
-//               }
-//               p = p.Right;
-//           }
-//       }
-//       return -1;
-//   }
-// function findKthBinaryTree (root, k) {
-//   let s = [];
-//   let p = root;
-//   while(s.length > 0 || p != null) {
-//     if(p !== null) {
-//       s.push(p);
-//       p = p.right;
-//     } else {
-//       p = s.pop();
-//       k--;
-//       if( k === 0) {
-//         return p.val;
-//       }
-//       p = p.left;
-//     }
-//   }
-//   return null;
-// }
-
-// var l = {
-//   val: 6,
-//   left: {
-//     val: 2,
-//     left: {
-//       val: 0,
-//       left: null,
-//       right: null
-//     },
-//     right: {
-//       val: 4,
-//       left: {
-//         val: 3,
-//         left: null,
-//         right: null
-//       },
-//       right: {
-//         val: 5,
-//         left: null,
-//         right: null
-//       }
-//     }
-//   },
-//   right: {
-//     val: 8,
-//     left: {
-//       val: 7,
-//       left: null,
-//       right: null
-//     },
-//     right: {
-//       val: 9,
-//       left: null,
-//       right: null
-//     }
-//   }
-// }
-
-
-// console.log(findKthBinaryTree(l, 4));
-
-
-// 给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，
-// 请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据。
-
-// var reservoir = Array[m];
-
-// for(var i = 0; i < reservoir.length; i++) {
-//   reservoir[i] = dataStream[i];
-// }
-
-// for(var i = m; i < dataStream.length; i++) {
-//   let d = Math.floor(Math.random(0, i) * i);
-//   if(d < m) {
-//     reservoir[d] = dataStream[i];
-//   }
-// }
-
-// let foo = {
-//   name: 'bind'
-// };
-// function callName() {
-//   console.log(this.name);
-// };
-
-// function createBind(oThis) {
-//   let self = this;
-//    return function() {
-//      self.call(oThis);
-//   }
-// }
-// Function.prototype.bind = createBind;
-
-// let bindsFun = callName.bind(foo);
-// bindsFun()
-
-
-// let foo = {
-//   name: 'bind'
-// };
-// function callName(age, sex) {
-//   console.log(this.name);
-//   console.log(age);
-//   console.log(sex);
-// }
-// function createBind(oThis, ...outArg) {
-//   let self = this;
-//   return function(...innArg) {
-//      self.call(oThis, ...outArg, ...innArg);
-//   }
-// }
-// Function.prototype.bind = createBind;
-// let bindsFun = callName.bind(foo, 12);
-// bindsFun('male')
-
-
-// let foo = {
-//   name: 'bind'
-// };
-// function callSth(age, sex) {
-//   console.log(this.name);
-//   console.log(age);
-//   console.log(sex);
-//   console.log(this.grade);
-// }
-// callSth.prototype.grade = 11;
-
-// let bindsFun = callSth.bind(foo);
-
-// let callFun = new bindsFun(1, 'male');
-
-// callFun;
+setImmediate(function(){
+  console.log("setImmediate");
+  setImmediate(function(){
+    console.log("嵌套setImmediate");
+  });
+  process.nextTick(function(){
+    console.log("nextTick");
+  })
+});
