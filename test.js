@@ -428,12 +428,20 @@
 // start end 999 111 444 777 888 555 666 333 222
 
 
-setImmediate(function(){
-  console.log("setImmediate");
-  setImmediate(function(){
-    console.log("嵌套setImmediate");
-  });
-  process.nextTick(function(){
-    console.log("nextTick");
-  })
-});
+var lengthOfLongestSubstring = function(s) {
+  let maxLength = 0;
+  let str = s[0];
+
+  for(var i = 1; i < s.length; i++){
+    let subIndex = str.indexOf(s[i]);
+    if(subIndex === -1){
+      str += s[i];
+    } else {
+      maxLength = maxLength > str.length ? maxLength : str.length;
+      str = str.substring(subIndex + 1) + s[i];
+    }
+  }
+  return maxLength > str.length ? maxLength : str.length;
+};
+
+console.log(lengthOfLongestSubstring('pwwke'));
