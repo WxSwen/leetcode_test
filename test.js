@@ -428,20 +428,37 @@
 // start end 999 111 444 777 888 555 666 333 222
 
 
-var lengthOfLongestSubstring = function(s) {
-  let maxLength = 0;
-  let str = s[0];
-
-  for(var i = 1; i < s.length; i++){
-    let subIndex = str.indexOf(s[i]);
-    if(subIndex === -1){
-      str += s[i];
-    } else {
-      maxLength = maxLength > str.length ? maxLength : str.length;
-      str = str.substring(subIndex + 1) + s[i];
-    }
+var findMedianSortedArrays = function(nums1, nums2) {
+  let midNumber1 = searchMiddle(nums1);
+  let midNumber2 = searchMiddle(nums2);
+  
+  let result = 0;
+  if(midNumber1 === 0) {
+    result = midNumber2;
+  } else if(midNumber2 === 0) {
+    result = midNumber1;
+  } else {
+    result = (midNumber1 + midNumber2) / 2;
   }
-  return maxLength > str.length ? maxLength : str.length;
+
+  if(parseInt(result) !== result) {
+    return parseInt(result) + 0.5;
+  } else {
+    return result;
+  }
 };
 
-console.log(lengthOfLongestSubstring('pwwke'));
+function searchMiddle(arr) {
+  if(arr.length === 0) return 0;
+  if(arr.length === 1) return arr[0];
+
+  let middle = arr.length >> 1;
+
+  if(arr.length%2 === 0) {
+    return (arr[middle - 1] + arr[middle]) / 2;
+  } else {
+    return arr[middle];
+  }
+}
+
+console.log(findMedianSortedArrays([3], [-2, -1]));

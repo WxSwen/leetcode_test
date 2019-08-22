@@ -17,6 +17,7 @@ var lengthOfLongestSubstring = function(s) {
     if (subIndex === -1) {
       str += s[i];
     } else {
+      // 需要每次先对比长度，并保留最长长度
       maxLength = maxLength > str.length ? maxLength : str.length;
       // 取str对比
       // 每次对比完都将前面的清除，将当前对比的字符串添加到末尾
