@@ -428,37 +428,58 @@
 // start end 999 111 444 777 888 555 666 333 222
 
 
-var findMedianSortedArrays = function(nums1, nums2) {
-  let midNumber1 = searchMiddle(nums1);
-  let midNumber2 = searchMiddle(nums2);
-  
-  let result = 0;
-  if(midNumber1 === 0) {
-    result = midNumber2;
-  } else if(midNumber2 === 0) {
-    result = midNumber1;
-  } else {
-    result = (midNumber1 + midNumber2) / 2;
-  }
+var levelOrder = function(root) {
+  let arr = [];
+  if(!root) return arr;
 
-  if(parseInt(result) !== result) {
-    return parseInt(result) + 0.5;
-  } else {
-    return result;
-  }
+  arr.push([root.val]);
+
+  reverse(root, arr, 1);
+
+  return arr;
 };
 
-function searchMiddle(arr) {
-  if(arr.length === 0) return 0;
-  if(arr.length === 1) return arr[0];
+function reverse(root, finalArr, level) {
+  if(!root || (root.left === null && root.right === null)) return finalArr;
+  finalArr[level] = finalArr[level] ? finalArr[level] : [];
 
-  let middle = arr.length >> 1;
+  if (root.left) {
+    finalArr[level].push(root.left.val);
+  }
+  if (root.right) {
+    finalArr[level].push(root.right.val);
+  }
 
-  if(arr.length%2 === 0) {
-    return (arr[middle - 1] + arr[middle]) / 2;
-  } else {
-    return arr[middle];
+  if (root.left) {
+    reverse(root.left, finalArr, level + 1);
+  }
+  if (root.right) {
+    reverse(root.right, finalArr, level + 1);
+  }
+
+  return finalArr;
+}
+
+var a = {
+  val: 1,
+  left: {
+    val: 2,
+    left: {
+      val: 4,
+      left: null,
+      right: null
+    },
+    right: null
+  },
+  right: {
+    val: 3,
+    left: null,
+    right: {
+      val: 5,
+      left: null,
+      right: null
+    }
   }
 }
 
-console.log(findMedianSortedArrays([3], [-2, -1]));
+console.log(levelOrder(a));
