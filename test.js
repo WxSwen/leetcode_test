@@ -428,36 +428,22 @@
 // start end 999 111 444 777 888 555 666 333 222
 
 
-var levelOrder = function(root) {
-  let arr = [];
-  if(!root) return arr;
 
-  arr.push([root.val]);
-
-  reverse(root, arr, 1);
-
-  return arr;
+var isBalanced = function(root) {
+  return typeof reverse(root) === 'number';
 };
 
-function reverse(root, finalArr, level) {
-  if(!root || (root.left === null && root.right === null)) return finalArr;
-  finalArr[level] = finalArr[level] ? finalArr[level] : [];
+function reverse (root) {
+  if (!root) return 0;
 
-  if (root.left) {
-    finalArr[level].push(root.left.val);
-  }
-  if (root.right) {
-    finalArr[level].push(root.right.val);
-  }
+  let left = reverse(root.left);
+  let right = reverse(root.right);
 
-  if (root.left) {
-    reverse(root.left, finalArr, level + 1);
+  if ((left === false && right === false) || Math.abs(left - right) > 1) {
+    return false;
+  } else {
+    return Math.max(left, right) + 1;
   }
-  if (root.right) {
-    reverse(root.right, finalArr, level + 1);
-  }
-
-  return finalArr;
 }
 
 var a = {
@@ -465,21 +451,29 @@ var a = {
   left: {
     val: 2,
     left: {
-      val: 4,
-      left: null,
+      val: 3,
+      left: {
+        val: 4,
+        left: null,
+        right: null
+      },
       right: null
     },
     right: null
   },
   right: {
-    val: 3,
+    val: 2,
     left: null,
     right: {
-      val: 5,
+      val: 3,
       left: null,
-      right: null
+      right: {
+        val: 3,
+        left: null,
+        right: null
+      }
     }
   }
 }
 
-console.log(levelOrder(a));
+console.log(isBalanced(a));
