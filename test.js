@@ -429,46 +429,61 @@
 
 
 
-var isBalanced = function(root) {
-  return typeof reverse(root) === 'number';
+var pathSum = function(root, sum) {
+  if(!root) return sum === 0;
+
+  let arr = [];
+
+  reverse(root, []);
+
+  function reverse (root, array) {
+    if (!root.left && !root.right) {
+      arr.push([...array, root.val]);
+      return;
+    };
+    
+    if (root.left) {
+      reverse(root.left, [...array, root.val]);
+    }
+    if (root.right) {
+      reverse(root.right, [...array, root.val]);
+    }
+  }
+
+  return arr.filter(item => item.reduce((a, b) => a + b) === sum);
 };
 
-function reverse (root) {
-  if (!root) return 0;
-
-  let left = reverse(root.left);
-  let right = reverse(root.right);
-
-  if ((left === false && right === false) || Math.abs(left - right) > 1) {
-    return false;
-  } else {
-    return Math.max(left, right) + 1;
-  }
-}
-
 var a = {
-  val: 1,
+  val: 5,
   left: {
-    val: 2,
+    val: 4,
     left: {
-      val: 3,
+      val: 11,
       left: {
-        val: 4,
+        val: 7,
         left: null,
         right: null
       },
-      right: null
+      right: {
+        val: 2,
+        left: null,
+        right: null
+      }
     },
     right: null
   },
   right: {
-    val: 2,
-    left: null,
+    val: 8,
+    left: {
+      val: 13,
+      left: null,
+      right: null
+    },
     right: {
-      val: 3,
+      val: 4,
       left: null,
       right: {
-        val: 3,
+        val: 1,
         left: null,
         right: null
       }
@@ -476,4 +491,4 @@ var a = {
   }
 }
 
-console.log(isBalanced(a));
+console.log(pathSum(null, 22));
