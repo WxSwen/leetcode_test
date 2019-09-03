@@ -429,35 +429,27 @@
 
 
 
-function Link(val) {
-  this.val = val;
-  this.next = null;
-}
+var binaryTreePaths = function(root) {
+  let arr = [];
+  function reverse(root, str) {
+    if(!root) return [];
 
-var flatten = function(root) {
-    if(!root) return null;
-    let links = new Link(null);
-    let currentLink = null;
-    reverse(root, links);
-    
-    function reverse (root, finalLink) {
-      if(!root) return null;
-      
-      finalLink.val = root.val;
-      finalLink.next = new Link(null);
-      currentLink = finalLink.next;
-      
-      if(!root.left && !root.right) {
-        return null;
-      }
-      
-      root.left && reverse(root.left, currentLink);
-      
-      root.right && reverse(root.right, currentLink);
+    str = `${str === '' ? '' : `${str}->` }${root.val}`;
+    if (!root.left && !root.right) {
+      arr.push(str);
+      return;
     }
+    if(root.left) {
+      reverse(root.left, str)
+    }
+    if(root.right) {
+      reverse(root.right, str)
+    }
+  };
+  reverse(root, '');
 
-    return JSON.stringify(links);
-};
+  return arr;
+}
 
 
 var a = {
@@ -486,4 +478,4 @@ var a = {
   }
 }
 
-console.log(flatten(a));
+console.log(binaryTreePaths(a));
