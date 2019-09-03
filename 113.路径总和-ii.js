@@ -20,21 +20,20 @@ var pathSum = function(root, sum) {
 
   let arr = [];
 
-  reverse(root, []);
+  reverse(root, [], 0);
 
-  function reverse (root, array) {
+  function reverse (root, array, currentSum) {
     if (!root.left && !root.right) {
-      let finals = [...array, root.val];
-      if (finals.reduce((a, b) => a + b) === sum) {
-        arr.push(finals);
+      if (currentSum + root.val === sum) {
+        arr.push([...array, root.val]);
       }
     };
     
     if (root.left) {
-      reverse(root.left, [...array, root.val]);
+      reverse(root.left, [...array, root.val], currentSum + root.val);
     }
     if (root.right) {
-      reverse(root.right, [...array, root.val]);
+      reverse(root.right, [...array, root.val], currentSum + root.val);
     }
   }
 

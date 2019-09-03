@@ -429,66 +429,61 @@
 
 
 
-var pathSum = function(root, sum) {
-  if(!root) return sum === 0;
+function Link(val) {
+  this.val = val;
+  this.next = null;
+}
 
-  let arr = [];
-
-  reverse(root, []);
-
-  function reverse (root, array) {
-    if (!root.left && !root.right) {
-      arr.push([...array, root.val]);
-      return;
-    };
+var flatten = function(root) {
+    if(!root) return null;
+    let links = new Link(null);
+    let currentLink = null;
+    reverse(root, links);
     
-    if (root.left) {
-      reverse(root.left, [...array, root.val]);
+    function reverse (root, finalLink) {
+      if(!root) return null;
+      
+      finalLink.val = root.val;
+      finalLink.next = new Link(null);
+      currentLink = finalLink.next;
+      
+      if(!root.left && !root.right) {
+        return null;
+      }
+      
+      root.left && reverse(root.left, currentLink);
+      
+      root.right && reverse(root.right, currentLink);
     }
-    if (root.right) {
-      reverse(root.right, [...array, root.val]);
-    }
-  }
 
-  return arr.filter(item => item.reduce((a, b) => a + b) === sum);
+    return JSON.stringify(links);
 };
 
+
 var a = {
-  val: 5,
+  val: 1,
   left: {
-    val: 4,
+    val: 2,
     left: {
-      val: 11,
-      left: {
-        val: 7,
-        left: null,
-        right: null
-      },
-      right: {
-        val: 2,
-        left: null,
-        right: null
-      }
-    },
-    right: null
-  },
-  right: {
-    val: 8,
-    left: {
-      val: 13,
+      val: 3,
       left: null,
       right: null
     },
     right: {
       val: 4,
       left: null,
-      right: {
-        val: 1,
-        left: null,
-        right: null
-      }
+      right: null
+    }
+  },
+  right: {
+    val: 5,
+    left: null,
+    right: {
+      val: 6,
+      left: null,
+      right: null
     }
   }
 }
 
-console.log(pathSum(null, 22));
+console.log(flatten(a));
