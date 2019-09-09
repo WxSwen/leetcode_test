@@ -52,6 +52,7 @@ function getKNodeBTree(root, k) {
 
 
   // 栈2
+  // 
   let s = [];
   let p = root;
   while(s.length > 0 || p != null) {
