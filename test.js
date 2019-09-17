@@ -429,53 +429,80 @@
 
 
 
-var binaryTreePaths = function(root) {
-  let arr = [];
-  function reverse(root, str) {
-    if(!root) return [];
+// var binaryTreePaths = function(root) {
+//   let arr = [];
+//   function reverse(root, str) {
+//     if(!root) return [];
 
-    str = `${str === '' ? '' : `${str}->` }${root.val}`;
-    if (!root.left && !root.right) {
-      arr.push(str);
-      return;
-    }
-    if(root.left) {
-      reverse(root.left, str)
-    }
-    if(root.right) {
-      reverse(root.right, str)
-    }
-  };
-  reverse(root, '');
+//     str = `${str === '' ? '' : `${str}->` }${root.val}`;
+//     if (!root.left && !root.right) {
+//       arr.push(str);
+//       return;
+//     }
+//     if(root.left) {
+//       reverse(root.left, str)
+//     }
+//     if(root.right) {
+//       reverse(root.right, str)
+//     }
+//   };
+//   reverse(root, '');
 
-  return arr;
-}
+//   return arr;
+// }
 
 
-var a = {
-  val: 1,
-  left: {
-    val: 2,
-    left: {
-      val: 3,
-      left: null,
-      right: null
-    },
-    right: {
-      val: 4,
-      left: null,
-      right: null
-    }
-  },
-  right: {
-    val: 5,
-    left: null,
-    right: {
-      val: 6,
-      left: null,
-      right: null
-    }
+// var a = {
+//   val: 1,
+//   left: {
+//     val: 2,
+//     left: {
+//       val: 3,
+//       left: null,
+//       right: null
+//     },
+//     right: {
+//       val: 4,
+//       left: null,
+//       right: null
+//     }
+//   },
+//   right: {
+//     val: 5,
+//     left: null,
+//     right: {
+//       val: 6,
+//       left: null,
+//       right: null
+//     }
+//   }
+// }
+
+// console.log(binaryTreePaths(a));
+
+
+var removeNthFromEnd = function(head, n) {
+  let fast = head;
+  let slow = head;
+
+  while (n) {
+    fast = fast.next;
+    n--;
   }
-}
+  if(!fast || fast.next === null) {
+    head = head.next;
+    return head;
+  }
 
-console.log(binaryTreePaths(a));
+  while(fast.next) {
+    fast = fast.next;
+    slow = slow.next;
+  }
+  // 对象是单独地址的，所以改变单个对象会影响head
+  slow.next = slow.next.next;
+  return head;
+};
+
+var a = {val: 1, next: {val: 2, next: null} }
+
+console.log(removeNthFromEnd(a, 1));
