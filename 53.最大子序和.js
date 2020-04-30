@@ -67,7 +67,7 @@
 // 思路：改变数组的每一项并且保证前面相加为正数
 var maxSubArray = function (nums) {
   for (let i = 1; i < nums.length; i++) {
-    nums[i - 1] > 0 && (nums[i] = nums[i - 1] + nums[i]);
+    nums[i - 1] > 0 && (nums[i] += nums[i - 1]);
   }
   return Math.max(...nums);
 };
