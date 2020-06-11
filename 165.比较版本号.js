@@ -11,28 +11,20 @@
  * @return {number}
  */
 var compareVersion = function (version1, version2) {
-  let v1_arr = version1.split(".");
-  let v2_arr = version2.split(".");
-  let minArray = null;
-  let maxArray = null;
-  let isV1Min = false;
-
-  if (v1_arr.length < v2_arr.length) {
-    minArray = v1_arr;
-    maxArray = v2_arr;
-    isV1Min = true;
-  } else {
-    minArray = v2_arr;
-    maxArray = v1_arr;
-    isV1Min = false;
+  let v1_arr = version1.split(".").map((v) => Number(v));
+  let v2_arr = version2.split(".").map((v) => Number(v));
+  let arr = v1_arr.length > v2_arr.length ? v2_arr : v1_arr;
+  let abs = Math.abs(v1_arr.length - v2_arr.length);
+  while (abs) {
+    arr.push(0);
+    abs--;
   }
 
-  for (let i = 0; i < maxArray.length; i++) {
-    if (!minArray[i]) minArray[i] = 0;
-    if (Number(minArray[i]) < Number(maxArray[i])) {
-      return isV1Min ? -1 : 1;
-    } else if (Number(minArray[i]) > Number(maxArray[i])) {
-      return isV1Min ? 1 : -1;
+  for (let i = 0; i < v1_arr.length; i++) {
+    if (v1_arr[i] < v2_arr[i]) {
+      return -1;
+    } else if (v1_arr[i] > v2_arr[i]) {
+      return 1;
     }
   }
   return 0;
