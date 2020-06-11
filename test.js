@@ -1,48 +1,52 @@
+// function compare(v1, v2) {
+//   let v1_arr = v1.split(".");
+//   let v2_arr = v2.split(".");
+
+//   let minArray = v1_arr.length < v2_arr.length ? v1_arr : v2_arr;
+//   let maxArray = v2_arr.length > v2_arr.length ? v2_arr : v1_arr;
+
+//   for (let i = 0; i < maxArray.length; i++) {
+//     if (minArray[i]) {
+//       if (Number(minArray[i]) < Number(maxArray[i])) {
+//         return 1;
+//       } else if (Number(minArray[i]) > Number(maxArray[i])) {
+//         return -1;
+//       }
+//     }
+//   }
+//   return 0;
+// }
+
+// console.log(compare("1.2.2", "1.2.6"));
+
+/*
+ * @lc app=leetcode.cn id=198 lang=javascript
+ *
+ * [198] 打家劫舍
+ */
+
+// @lc code=start
 /**
- * @param {string} word1
- * @param {string} word2
+ * @param {number[]} nums
  * @return {number}
  */
-var minDistance = function (word1, word2) {
-  let m = word1.length;
-  let n = word2.length;
-
-  if (n * m === 0) return n + m;
-
-  let D = [];
-
-  for (let j = 0; j < m + 1; j++) {
-    if (D[j] === undefined) {
-      D[j] = [];
-    }
-    D[j][0] = j;
+var rob = function (nums) {
+  let far = 0;
+  let near = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let max = Math.max(near, nums[i] + far);
+    far = near;
+    near = max;
   }
-  for (let i = 0; i < n + 1; i++) {
-    D[0][i] = i;
-  }
-
-  for (j = 1; j < m + 1; j++) {
-    for (i = 1; i < n + 1; i++) {
-      let left = D[j - 1][i] + 1;
-      let down = D[j][i - 1] + 1;
-
-      let left_down = D[j - 1][i - 1];
-
-      if (word1[j - 1] !== word2[i - 1]) {
-        left_down += 1;
-      }
-      D[j][i] = Math.min(left, down, left_down);
-    }
-  }
-  return D[m][n];
+  return near;
 };
+// console.log(calculate(40));
 
-console.log(minDistance("horse", "ros"));
-
-// 1. 删除a = 添加b
-// 2. 添加a = 删除b
-// 3. 替换a = 替换b
-
-// 1. 添加a
-// 2. 添加b
-// 3. 替换a
+// int a = 0, b = 0;
+//         for (int i = 0; i < nums.length; i++) {
+//             int c = Math.max(b, a + nums[i]);
+//             a = b;
+//             b = c;
+//         }
+//         return b;
+// @lc code=end
