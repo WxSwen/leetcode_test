@@ -1,16 +1,9 @@
-var isSubsequence = function (s, t) {
-  let s_arr = s.split("");
-  let t_arr = t.split("");
-  let index = 0;
+var a = [
+  { val: 8, i: 0 },
+  { val: 1, i: 1 },
+  { val: 5, i: 2 },
+  { val: 2, i: 3 },
+  { val: 6, i: 4 },
+];
 
-  for (let i = 0; i < t_arr.length; i++) {
-    if (s_arr[index] === t_arr[i]) {
-      index++;
-    } else {
-      continue;
-    }
-  }
-  return index === s_arr.length;
-};
-
-console.log(isSubsequence("abc", "ahbgdc"));
+console.log(a.sort((a, b) => a.val - b.val));
