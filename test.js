@@ -1,9 +1,20 @@
-var a = [
-  { val: 8, i: 0 },
-  { val: 1, i: 1 },
-  { val: 5, i: 2 },
-  { val: 2, i: 3 },
-  { val: 6, i: 4 },
-];
+const perm = (s) => {
+  let res = [];
+  if (s.length === 1) {
+    return [s];
+  }
 
-console.log(a.sort((a, b) => a.val - b.val));
+  for (let i = 0; i < s.length; i++) {
+    let c = s[i];
+    let str = s.slice(0, i) + s.slice(i + 1, s.length);
+    let l = perm(str);
+
+    for (let j = 0; j < l.length; j++) {
+      let temp = c + l[j];
+      res.push(temp);
+    }
+  }
+  return res;
+};
+
+console.log(perm("abc"));
