@@ -1,3 +1,14 @@
+/*
+ * @lc app=leetcode.cn id=46 lang=javascript
+ *
+ * [46] 全排列
+ */
+
+// @lc code=start
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
 var permute = function (nums) {
   let res = [];
   if (nums.length === 1) return [nums];
@@ -15,4 +26,4 @@ var permute = function (nums) {
   }
   return res;
 };
-console.log(permute([1, 2, 3]));
+// @lc code=end
