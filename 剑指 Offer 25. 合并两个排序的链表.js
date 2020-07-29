@@ -10,25 +10,23 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
-
-// 合并的时候保持next
-// cur 返回cur.next
 var mergeTwoLists = function (l1, l2) {
-  let dum = new ListNode(0);
-  let cur = dum;
+  let list = new ListNode(null);
+  let head = list.next;
 
-  while (l1 && l2) {
-    if (l1.val < l2.val) {
-      cur.next = l1;
+  while (l1 || l2) {
+    if (l2.val > l1.val) {
+      head.val = l1.val;
+      head = new ListNode(null);
       l1 = l1.next;
     } else {
-      cur.next = l2;
+      head.val = l2.val;
+      head = new ListNode(null);
       l2 = l2.next;
     }
-    cur = cur.next;
   }
-  cur.next = l1 ? l1 : l2;
-  return dum.next;
+
+  return list.next;
 };
 
 var a = {
