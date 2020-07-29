@@ -14,25 +14,23 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isSymmetric = function(root) {
-    if(!root) return true;
-    return reverse(root.left, root.right);
+var isSymmetric = function (root) {
+  if (!root) return true;
+  return reverse(root.left, root.right);
 };
 
 function reverse(left, right) {
-  var leftStatus, rightStatus;
-  if(left === null && right === null) {
+  if (left === null && right === null) {
     return true;
-  } else if(left === null || right === null){
+  } else if (left === null || right === null) {
     return false;
   } else {
-    if(left.val === right.val) {
-      return reverse(left.left, right.right) && reverse(left.right, right.left)
+    if (left.val === right.val) {
+      return reverse(left.left, right.right) && reverse(left.right, right.left);
     } else {
       return false;
     }
   }
-  return tree;
 }
 
 var a = {
@@ -42,27 +40,27 @@ var a = {
     left: {
       val: 3,
       left: null,
-      right: null
+      right: null,
     },
     right: {
       val: 4,
       left: null,
-      right: null
-    }
+      right: null,
+    },
   },
   right: {
     val: 2,
     left: {
       val: 4,
       left: null,
-      right: null
+      right: null,
     },
     right: {
       val: 1,
       left: null,
-      right: null
-    }
-  }
-}
+      right: null,
+    },
+  },
+};
 
 console.log(isSymmetric(a));
