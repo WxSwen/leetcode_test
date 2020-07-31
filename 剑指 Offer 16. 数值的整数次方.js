@@ -10,27 +10,27 @@
 // 有符号32位整数
 // 所有的按位操作符的操作数都会被转成补码（two's complement）形式的有符号32位整数
 
+// 取巧：单独处理2147483648这个超出范围的数字，即可
+
 var myPow = function (x, n) {
-  var result = 1;
-  if (n === 0) {
-    return 1;
-  }
-  if (n === 1) {
-    return x;
-  }
+  if (n === 0) return 1;
+  if (n === 1) return x;
+
   if (n < 0) {
-    return 1 / myPow(x, -n);
+    x = 1 / x;
+    n = -n;
   }
-  // n > 1
-  if (n % 2 === 1) {
-    // n 奇数
-    result = x * myPow(x, n - 1);
-  } else {
-    // n 偶数
-    result = myPow(x, n / 2);
-    result *= result;
+  let res = 1;
+  if (n === 2147483648) {
+    n = n - 1;
+    res *= x;
   }
-  return result;
+  while (n) {
+    if ((n & 1) === 1) res *= x;
+    x *= x;
+    n >>= 1;
+  }
+  return res;
 };
 
 console.log(myPow(2, -2147483648));
