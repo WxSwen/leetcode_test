@@ -9,6 +9,9 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
+
+// 快慢指针
+// 实际上跟普通递归没什么区别，只是保存next变量
 var reverseList = function (head) {
   let slow = null;
   let fast = head;
